@@ -1,0 +1,53 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+      "major": 3,
+      "minor": 25
+    },
+    "configurePresets": [
+        {
+            "name": "debug-base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "flags-clang-gcc",
+            "description": "Common compiler flags for both Clang and GCC",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "-Wall -Wextra"
+            }
+        },
+        {
+            "name": "debug-clang-macos",
+            "displayName": "Debug Clang macOS",
+            "inherits": ["debug-base", "flags-clang-gcc"],
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
+        },
+        {
+            "name": "debug-gcc-macos",
+            "displayName": "Debug GCC macOS",
+            "inherits": ["debug-base", "flags-clang-gcc"],
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "/opt/homebrew/bin/g++-13"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "clang-macos",
+            "displayName": "Clang macOS",
+            "configurePreset": "debug-clang-macos"
+        },
+        {
+            "name": "gcc-macos",
+            "displayName": "GCC macOS",
+            "configurePreset": "debug-gcc-macos"
+        }
+    ]
+}
